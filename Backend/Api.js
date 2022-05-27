@@ -1,4 +1,4 @@
-const API = 'http://192.168.1.102:4000/Mostrar'
+const API = 'http://localhost:3000/api/users'
 
 
 export const Api = async() => {

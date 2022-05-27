@@ -43,9 +43,7 @@ export default function NavigationStack() {
             headerShown: false
           }}
         />
-
       </Stack.Navigator>
-
     </NavigationContainer>
   )
 }

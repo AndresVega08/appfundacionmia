@@ -1,56 +1,26 @@
-import React, { useState } from 'react';
-import { StyleSheet, Alert, View, } from 'react-native';
-import { Container, Button, Item, Input, Content, Form, Text } from 'native-base';
-
+import React, { useState, useEffect, Component } from 'react';
 import axios from 'axios'
+import { StyleSheet, Alert, View, TextInput, TouchableOpacity, } from 'react-native';
+import {
+  Container,
+  Header,
+  Content,
+  Item,
+  Input,
+  Form,
+  Thumbnail,
+  Label,
+  Button,
+  Text
+} from 'native-base';
+import { AuthContext } from '../context/AuthContext';
 
-const Login = () => {
+const Login = ({navigation}) => {
+  const [usernameOrEmail, setUsernameOrEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const {isLoading, Login} = useContext(AuthContext);
 
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [usernameOrEmailError, setUsernameOrEmailError] = useState('');
 
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
-  const [message, setMessage] = useState('');
-
-  const signin = async () => {
-    if (usernameOrEmail != "" && password != "") {
-      //alert('Gracias por Iniciar Sesión');
-      await fetch('http://localhost:8080/api/auth', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          'usernameOrEmail': usernameOrEmail,
-          'password': password
-        })
-
-      }).then(res => res.json())
-        .then(resData => {
-          //alert(resData.message);
-          setMessage(resData.message);
-        })
-    }
-
-    if (usernameOrEmail != "") {
-      alert(usernameOrEmail);
-      setUsernameOrEmailError('');
-
-    } else {
-      setUsernameOrEmailError('El Nombre de Usuario no debe de estar vacío');
-    }
-
-    if (password != "") {
-      alert(password);
-      setPasswordError('');
-
-    } else {
-      setPasswordError('Tu contraseña no debe estar vaía')
-    }
-  }
 
   return (
     <Container style={styles.body}>
@@ -58,40 +28,31 @@ const Login = () => {
         <Text style={styles.logintext1}>Bienvenido</Text>
         <Text style={styles.logintext2}>Fundación Mía</Text>
         <Text style={styles.logintext3}>Construyendo Futuro</Text>
-        <Text style={{color:'green'}}>{message}</Text>
-        <Form >
+        <Form>
           <Text style={styles.inputtext}>Usuario</Text>
           <Item style={styles.email} >
-            <Input
-              placeholder="Usuario"
+            <TextInput
+              placeholder="Introduzca su usuario"
               value={usernameOrEmail}
-              onChangeText={(usernameOrEmail) => setUsernameOrEmail(usernameOrEmail)}
-              onChange={() => setUsernameOrEmailError('')}
+              onChangeText={text => setUsernameOrEmail(text)}
             />
           </Item>
-          <Text style={{ color: 'red' }}>{usernameOrEmailError}</Text>
-
           <Text style={styles.inputtext}>Contraseña</Text>
           <Item style={styles.contraseña} >
-            <Input
-              placeholder="Contraseña"
+            <TextInput
+              placeholder="Introduzca su contraseña" secureTextEntry 
               value={password}
-              onChangeText={(password) => setPassword(password)}
-              onChange={() => setPasswordError('')}
+              onChangeText={text => setPassword(text)}
             />
           </Item>
-          <Text style={{ color: 'red' }}>{passwordError}</Text>
-
-          <Button style={styles.boton} onPress={signin}>
+          <Button style={styles.boton} onPress={() => {login(email, password)}} >
             <Text style={styles.botontext} >Iniciar Sesion</Text>
           </Button>
-
         </Form>
       </View>
     </Container>
   );
 };
-
 
 const styles = StyleSheet.create({
 
