@@ -13,12 +13,12 @@ import {
   Button,
   Text
 } from 'native-base';
-import { AuthContext } from '../context/AuthContext';
+
 
 const Login = ({navigation}) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const {isLoading, Login} = useContext(AuthContext);
+  //const {isLoading, Login} = useContext(AuthContext);
 
 
 
@@ -45,7 +45,7 @@ const Login = ({navigation}) => {
               onChangeText={text => setPassword(text)}
             />
           </Item>
-          <Button style={styles.boton} onPress={() => {login(email, password)}} >
+          <Button style={styles.boton} onPress={() => {('auth')}} >
             <Text style={styles.botontext} >Iniciar Sesion</Text>
           </Button>
         </Form>
